@@ -1,12 +1,17 @@
-from src.core.scene import Scene
-from src.core.event_manager import EventManager
+from .scene import Scene
+from .event_manager import EventManager
 
 
 class SceneManager:
-    def __init__(self, event_manager: EventManager, screen):
+    def __new__(cls, screen):
+        if not hasattr(cls, 'instance'):
+            cls.instance = super(SceneManager, cls).__new__(cls)
+        return cls.instance
+
+    def __init__(self, screen):
         self.scenes = list()
         self.current_scene = 0
-        self.event_manager = event_manager
+        self.event_manager = EventManager()
         self.screen = screen
 
     def draw(self) -> None:

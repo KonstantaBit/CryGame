@@ -1,6 +1,6 @@
 from pygame.surface import Surface
 
-from src.core.scene_object import SceneObject
+from src.CryGame.scene_object import SceneObject
 
 
 class Render(SceneObject):

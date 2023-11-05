@@ -1,7 +1,7 @@
 import pygame as pg
 
-from src.core.scene_manager import SceneManager
-from src.core.event_manager import EventManager
+from .scene_manager import SceneManager
+from .event_manager import EventManager
 
 
 class App:
@@ -12,7 +12,7 @@ class App:
         self.screen = pg.display.set_mode((self.width, self.height))
 
         self.event_manager = EventManager()
-        self.scene_manager = SceneManager(self.event_manager, self.screen)
+        self.scene_manager = SceneManager(self.screen)
 
     def terminate(self):
         self.running = False

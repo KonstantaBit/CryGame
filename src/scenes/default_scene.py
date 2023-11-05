@@ -1,4 +1,4 @@
-from src.core.scene import Scene
+from src.CryGame.scene import Scene
 from src.scene_objects.background import Background
 
 

@@ -1,4 +1,4 @@
-from src.core.scene import Scene
+from src.CryGame.scene import Scene
 
 
 class RenderScene(Scene):

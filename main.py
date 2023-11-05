@@ -1,4 +1,4 @@
-from src.core.app import App
+from src.CryGame.app import App
 from src.scenes.default_scene import DefaultScene
 
 if __name__ == '__main__':
