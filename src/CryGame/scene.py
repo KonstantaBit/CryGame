@@ -1,9 +1,11 @@
+from abc import ABC, abstractmethod
 import sys
 import pygame as pg
 from .scene_object import SceneObjectInterface
 
 
-class SceneInterface:
+class SceneInterface(ABC):
+    @abstractmethod
     def __init__(self):
         self.screen = None
         self.scene_objects = list()
