@@ -1,5 +1,4 @@
-from .scene import Scene
-from .event_manager import EventManager
+from src.CryGame.scene import SceneInterface
 
 
 class SceneManager:
@@ -11,16 +10,13 @@ class SceneManager:
     def __init__(self, screen):
         self.scenes = list()
         self.current_scene = 0
-        self.event_manager = EventManager()
         self.screen = screen
 
-    def draw(self) -> None:
+    def run(self) -> None:
         if not self.scenes:
             return
-        self.scenes[self.current_scene].draw(self.screen)
+        self.scenes[self.current_scene].run()
 
-    def run(self) -> None:
-        self.draw()
-
-    def add_scene(self, scene: Scene) -> None:
+    def add_scene(self, scene: SceneInterface) -> None:
+        scene.set_screen(self.screen)
         self.scenes.append(scene)

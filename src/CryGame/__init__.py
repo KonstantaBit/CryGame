@@ -1,5 +1,4 @@
-import os
-
-os.chdir('../..')
-os.environ['CG_ROOT_FOLDER'] = os.path.abspath(os.curdir)
-print(os.environ['CG_ROOT_FOLDER'])
+from src.CryGame.app import *
+from src.CryGame.scene import *
+from src.CryGame.scene_manager import *
+from src.CryGame.scene_object import *
