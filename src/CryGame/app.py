@@ -10,6 +10,7 @@ class App:
         return cls.instance
 
     def __init__(self):
+        pg.init()
         self._running = True
         self._width = 1080
         self._height = 720
@@ -23,3 +24,4 @@ class App:
         while self._running:
             self.scene_manager.run()
             pg.display.flip()
+            self.screen.fill((60, 60, 80))

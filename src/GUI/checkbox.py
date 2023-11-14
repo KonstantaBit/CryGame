@@ -1,29 +1,32 @@
 import pygame as pg
-import src.GUI.image
-from src.CryGame.scene_object import SceneObjectInterface
+
+from .image import Image
+from .clickable_object import ClickableGUIObject
 
 
-class Checkbox(SceneObjectInterface):
-    def __init__(self, rest_image: str, hover_image: str, active_image: str, active_hover_image: str, x: int, y: int):
-        self.rest_image = src.GUI.Image(rest_image, x, y)
-        self.hover_image = src.GUI.Image(hover_image, x, y)
-        self.active_image = src.GUI.Image(active_image, x, y)
-        self.active_hover_image = src.GUI.Image(active_hover_image, x, y)
-        self.rect = self.rest_image.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
+class Checkbox(ClickableGUIObject):
+    def __init__(self, rect: pg.Rect, rest_image: str, hover_image: str, active_image: str, active_hover_image: str):
+        super().__init__(rect)
+        self.rest_image = Image(rect, rest_image)
+        self.hover_image = Image(rect, hover_image)
+        self.active_image = Image(rect, active_image)
+        self.active_hover_image = Image(rect, active_hover_image)
+        self.rect.size = self.rest_image.image.get_rect().size
         self.active = False
 
-    def mouse_over(self):
-        if self.rect.collidepoint(pg.mouse.get_pos()):
-            return True
-        return False
+    def move(self, x: int, y: int) -> None:
+        self.rest_image.move(x, y)
+        self.hover_image.move(x, y)
+        self.active_image.move(x, y)
+        self.active_hover_image.move(x, y)
+        self.rect.topleft = x, y
 
-    def left_clicked(self):
-        if self.mouse_over():
-            self.active = not self.active
-            return True
-        return False
+    def resize(self, width: int, height: int) -> None:
+        self.rest_image.resize(width, height)
+        self.hover_image.resize(width, height)
+        self.active_image.resize(width, height)
+        self.active_hover_image.resize(width, height)
+        self.rect.size = width, height
     
     def draw(self, display: pg.Surface):
         if self.mouse_over():

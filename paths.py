@@ -1,6 +1,6 @@
 import os
 
-savesPath = None
+savesPath = os.path.join(os.getcwd(), 'saves')
 dataPath = None
 
 assetPath = os.path.join(os.getcwd(), 'assets')
