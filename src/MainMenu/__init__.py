@@ -1,0 +1,3 @@
+from src.MainMenu.main_menu_scene import MainMenuScene
+from src.MainMenu.singleplayer_menu_scene import SinglePlayerMenuScene
+from src.MainMenu.multiplayer_menu_scene import MultiPlayerMenuScene

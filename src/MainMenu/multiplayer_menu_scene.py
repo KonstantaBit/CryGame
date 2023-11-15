@@ -1,13 +1,14 @@
 import pygame as pg
 from pygame import Rect
 import sys
-from src.CryGame import SceneInterface, SceneManager
+from src.CryGame import SceneInterface
 from src.GUI import Image, TextButton, ContainerRows
 from paths import assetPath
 import os
+import socket
 
 
-class MainMenuScene(SceneInterface):
+class MultiPlayerMenuScene(SceneInterface):
     def __init__(self):
         super().__init__()
         self.background = Image(Rect(0, 0, 1080, 720),
@@ -17,60 +18,55 @@ class MainMenuScene(SceneInterface):
         y = (720 - 400) / 2
 
         self.menu_container = ContainerRows(Rect(x, y, 500, 400), padding=2)
-        self.title = TextButton(
-            Rect(0, 0, 10, 10),
-            255,
-            255,
-            "Гномы-геологи",
-            55,
-            pg.Color(200, 0, 200),
-            os.path.join(assetPath, 'fonts/SourceSansPro-Regular.ttf')
-        )
-        self.menu_container.add(self.title)
 
-        self.play_button = TextButton(
+        self.create_world_button = TextButton(
             Rect(0, 0, 10, 10),
             200,
             150,
-            "Одиночная игра",
+            "Подключиться",
             35,
             pg.Color(255, 255, 255),
             os.path.join(assetPath, 'fonts/SourceSansPro-Light.ttf')
         )
-        self.menu_container.add(self.play_button)
+        self.menu_container.add(self.create_world_button)
 
-        self.multiplayer_button = TextButton(
+        self.delete_world_button = TextButton(
             Rect(0, 0, 10, 10),
             200,
             150,
-            "Сетевая игра",
+            "Запустить локальный сервер",
             35,
             pg.Color(255, 255, 255),
             os.path.join(assetPath, 'fonts/SourceSansPro-Light.ttf')
         )
-        self.menu_container.add(self.multiplayer_button)
+        self.menu_container.add(self.delete_world_button)
 
-        self.settings_button = TextButton(
+        self.back_button = TextButton(
             Rect(0, 0, 10, 10),
             200,
             150,
-            "Настройки",
+            "Назад",
             35,
             pg.Color(255, 255, 255),
             os.path.join(assetPath, 'fonts/SourceSansPro-Light.ttf')
         )
-        self.menu_container.add(self.settings_button)
+        self.menu_container.add(self.back_button)
 
-        self.exit_button = TextButton(
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        g = s.getsockname()[0]
+        s.close()
+
+        self.ip_panel = TextButton(
             Rect(0, 0, 10, 10),
             200,
-            150,
-            "Выйти",
+            200,
+            f"Ваш локальный IP: {socket.gethostbyname(g)}",
             35,
             pg.Color(255, 255, 255),
             os.path.join(assetPath, 'fonts/SourceSansPro-Light.ttf')
         )
-        self.menu_container.add(self.exit_button)
+        self.menu_container.add(self.ip_panel)
 
         self.add_scene_object(self.background)
         self.add_scene_object(self.menu_container)
@@ -81,12 +77,5 @@ class MainMenuScene(SceneInterface):
                 pg.quit()
                 sys.exit()
             if event.type == pg.MOUSEBUTTONDOWN:
-                if self.exit_button.mouse_over():
-                    pg.quit()
-                    sys.exit()
-                elif self.play_button.mouse_over():
-                    self.scene_manager.current_scene = 1
-                elif self.multiplayer_button.mouse_over():
-                    self.scene_manager.current_scene = 2
-                elif self.settings_button.mouse_over():
-                    pass
+                if self.back_button.mouse_over():
+                    self.scene_manager.current_scene = 0

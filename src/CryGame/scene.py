@@ -8,10 +8,14 @@ class SceneInterface(ABC):
     @abstractmethod
     def __init__(self):
         self.screen = None
+        self.scene_manager = None
         self.scene_objects = list()
 
     def set_screen(self, screen: pg.Surface):
         self.screen = screen
+
+    def set_scene_manager(self, scene_manager):
+        self.scene_manager = scene_manager
 
     def draw(self) -> None:
         for obj in self.scene_objects:

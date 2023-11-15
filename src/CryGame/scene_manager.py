@@ -2,11 +2,6 @@ from src.CryGame.scene import SceneInterface
 
 
 class SceneManager:
-    def __new__(cls, screen):
-        if not hasattr(cls, 'instance'):
-            cls.instance = super(SceneManager, cls).__new__(cls)
-        return cls.instance
-
     def __init__(self, screen):
         self.scenes = list()
         self.current_scene = 0
@@ -19,4 +14,5 @@ class SceneManager:
 
     def add_scene(self, scene: SceneInterface) -> None:
         scene.set_screen(self.screen)
+        scene.set_scene_manager(self)
         self.scenes.append(scene)
