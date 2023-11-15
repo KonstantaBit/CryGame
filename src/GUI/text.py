@@ -32,7 +32,9 @@ class Text(MovableGUIObject):
         self.rect.topleft = x, y
 
     def resize(self, width: int, height: int) -> None:
-        pass
+        self.rect.size = width, height
 
     def draw(self, display):
-        display.blit(self.graphic_text, self.rect.topleft)
+        x = self.rect.centerx - self.graphic_text.get_rect().width // 2
+        y = self.rect.centery - self.graphic_text.get_rect().height // 2
+        display.blit(self.graphic_text, (x, y))
