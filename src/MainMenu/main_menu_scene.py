@@ -3,7 +3,7 @@ from pygame import Rect
 import sys
 from src.CryGame import SceneInterface, SceneManager
 from src.GUI import Image, TextButton, ContainerRows
-from paths import assetPath
+from paths import asset_path
 import os
 
 
@@ -11,7 +11,7 @@ class MainMenuScene(SceneInterface):
     def __init__(self):
         super().__init__()
         self.background = Image(Rect(0, 0, 1080, 720),
-                                os.path.join(assetPath, 'image/menu/background.png'))
+                                os.path.join(asset_path, 'image/menu/background.png'))
 
         x = (1080 - 500) / 2
         y = (720 - 400) / 2
@@ -24,7 +24,7 @@ class MainMenuScene(SceneInterface):
             "Гномы-геологи",
             55,
             pg.Color(200, 0, 200),
-            os.path.join(assetPath, 'fonts/SourceSansPro-Regular.ttf')
+            os.path.join(asset_path, 'fonts/SourceSansPro-Regular.ttf')
         )
         self.menu_container.add(self.title)
 
@@ -35,7 +35,7 @@ class MainMenuScene(SceneInterface):
             "Одиночная игра",
             35,
             pg.Color(255, 255, 255),
-            os.path.join(assetPath, 'fonts/SourceSansPro-Light.ttf')
+            os.path.join(asset_path, 'fonts/SourceSansPro-Light.ttf')
         )
         self.menu_container.add(self.play_button)
 
@@ -46,7 +46,7 @@ class MainMenuScene(SceneInterface):
             "Сетевая игра",
             35,
             pg.Color(255, 255, 255),
-            os.path.join(assetPath, 'fonts/SourceSansPro-Light.ttf')
+            os.path.join(asset_path, 'fonts/SourceSansPro-Light.ttf')
         )
         self.menu_container.add(self.multiplayer_button)
 
@@ -57,7 +57,7 @@ class MainMenuScene(SceneInterface):
             "Настройки",
             35,
             pg.Color(255, 255, 255),
-            os.path.join(assetPath, 'fonts/SourceSansPro-Light.ttf')
+            os.path.join(asset_path, 'fonts/SourceSansPro-Light.ttf')
         )
         self.menu_container.add(self.settings_button)
 
@@ -68,7 +68,7 @@ class MainMenuScene(SceneInterface):
             "Выйти",
             35,
             pg.Color(255, 255, 255),
-            os.path.join(assetPath, 'fonts/SourceSansPro-Light.ttf')
+            os.path.join(asset_path, 'fonts/SourceSansPro-Light.ttf')
         )
         self.menu_container.add(self.exit_button)
 

@@ -3,7 +3,7 @@ from pygame import Rect
 import sys
 from src.CryGame import SceneInterface, SceneManager
 from src.GUI import Image, TextButton, ContainerRows
-from paths import assetPath
+from paths import asset_path
 import os
 
 
@@ -11,7 +11,7 @@ class SinglePlayerMenuScene(SceneInterface):
     def __init__(self):
         super().__init__()
         self.background = Image(Rect(0, 0, 1080, 720),
-                                os.path.join(assetPath, 'image/menu/background.png'))
+                                os.path.join(asset_path, 'image/menu/background.png'))
 
         x = (1080 - 500) / 2
         y = (720 - 400) / 2
@@ -25,7 +25,7 @@ class SinglePlayerMenuScene(SceneInterface):
             "Создать мир",
             35,
             pg.Color(255, 255, 255),
-            os.path.join(assetPath, 'fonts/SourceSansPro-Light.ttf')
+            os.path.join(asset_path, 'fonts/SourceSansPro-Light.ttf')
         )
         self.menu_container.add(self.create_world_button)
 
@@ -36,7 +36,7 @@ class SinglePlayerMenuScene(SceneInterface):
             "Удалить мир",
             35,
             pg.Color(255, 255, 255),
-            os.path.join(assetPath, 'fonts/SourceSansPro-Light.ttf')
+            os.path.join(asset_path, 'fonts/SourceSansPro-Light.ttf')
         )
         self.menu_container.add(self.delete_world_button)
 
@@ -47,7 +47,7 @@ class SinglePlayerMenuScene(SceneInterface):
             "Назад",
             35,
             pg.Color(255, 255, 255),
-            os.path.join(assetPath, 'fonts/SourceSansPro-Light.ttf')
+            os.path.join(asset_path, 'fonts/SourceSansPro-Light.ttf')
         )
         self.menu_container.add(self.back_button)
 

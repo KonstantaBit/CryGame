@@ -1,5 +1,5 @@
 import pygame as pg
-
+from .save_manager import SaveManager
 from .scene_manager import SceneManager
 
 
@@ -16,6 +16,11 @@ class App:
         self._height = 720
         self.screen = pg.display.set_mode((self._width, self._height))
         self.scene_manager = SceneManager(self.screen)
+
+    def reset_screen(self, width, height):
+        self._width = width
+        self._height = height
+        self.screen = pg.display.set_mode((self._width, self._height))
 
     def terminate(self):
         self._running = False
