@@ -1,7 +1,6 @@
 from perlin_noise import PerlinNoise
 from .block import Block
-import os
-from paths import asset_path
+from src.BlockType import *
 
 
 class Chunk:
@@ -18,11 +17,16 @@ class Chunk:
         pass
 
     def generate(self, x, y, seed):
-        perlin_noise = PerlinNoise(seed=seed)
+        perlin_noise_height = PerlinNoise(seed=seed, octaves=2,)
         for i in range(64):
             for j in range(64):
-                value = perlin_noise([(x * 64 + i) / 10, (y * 64 + j) / 10])
-                if value < 0:
-                    self.blocks[i][j] = Block(os.path.join(asset_path, "image", "tiles", "dirt.png"))
+                value = perlin_noise_height([(x * 64 + i) / 1024, (y * 64 + j) / 1024])
+                # Тут фабрику можно использовать, но потом
+                temp = Block()
+                if value < -0.015:
+                    temp.set_type(Water())
+                elif value < -0.01:
+                    temp.set_type(Sand())
                 else:
-                    self.blocks[i][j] = Block(os.path.join(asset_path, "image", "tiles", "sand.png"))
+                    temp.set_type(Dirt())
+                self.blocks[i][j] = temp

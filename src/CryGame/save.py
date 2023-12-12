@@ -34,9 +34,10 @@ class Save:
 
     def manage_chunks(self, load_points: list[[int, int]]):
         for el in load_points:
-            for i in range(1):
-                for j in range(1):
-                    self.load_chunk(el[0] - i, el[1] - j)
+            for i in range(2):
+                for j in range(2):
+                    if (el[0] - i, el[1] - j) not in self.chunks.keys():
+                        self.load_chunk(el[0] + i, el[1] + j)
 
     @staticmethod
     def get_chunk_number_by_cords(x: float, y: float) -> (int, int):

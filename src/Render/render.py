@@ -12,9 +12,12 @@ class Render(SceneObjectInterface):
 
     def draw(self, display: Surface) -> None:
         self.save.manage_chunks([(0, 0)])
+        size = int(32 * self.zoom)
         for el in self.save.chunks.items():
             print(el)
             for i in range(64):
                 for j in range(64):
-                    self.image_ref = pg.image.load(el[1].blocks[i][j].texture).convert_alpha()
-                    display.blit(self.image_ref, (i * 32, j * 32))
+                    image = pg.transform.scale(el[1].blocks[i][j].texture, (size, size))
+                    x = (size * i) + (64 * size * el[0][0])
+                    y = (size * j) + (64 * size * el[0][1])
+                    display.blit(image, (x, y))
