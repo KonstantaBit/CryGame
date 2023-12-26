@@ -2,6 +2,7 @@ import pygame as pg
 from abc import ABC
 from paths import entities_path
 from constants import HEIGHT, WIDTH
+import random
 import os
 from src.CryGame.position import Pos
 
@@ -20,9 +21,6 @@ class Entity(ABC):
         self.move()
 
     def move(self):
-        pass
-
-    def draw(self, screen: pg.Surface):
         pass
 
     def teleport(self, x: float, y: float):
@@ -84,12 +82,34 @@ class Dwarf(Entity):
             self.texture = self.animation[self.heading][self.animation_step]
         self.texture = pg.transform.scale(self.texture, (40, 40))
 
-    def draw(self, screen: pg.Surface):
-        screen.blit(self.texture, (WIDTH // 2, HEIGHT // 2))
-
 
 class ProbeFlag(Entity):
     def __init__(self, position: Pos, color: pg.Color):
         super().__init__(position)
-        self.texture = pg.Surface((50, 50))
-        self.texture.fill(color)
+        self.texture = pg.image.load(os.path.join(entities_path, 'stock.png'))
+        self.stock_texture = pg.image.load(os.path.join(entities_path, 'stock.png'))
+        self.animation = [pg.image.load(os.path.join(entities_path, f'flag{i}.png')).convert_alpha() for i in range(1, 4)]
+        self.clock = pg.time.Clock()
+        self.time_delay = 0
+        self.animation_step = 0
+        self.color = color
+
+    def update(self):
+        tick = self.clock.tick()
+        self.time_delay += tick
+        if self.time_delay > 200:
+            self.time_delay = 0
+            self.animation_step += 1
+            if self.animation_step == 3:
+                self.animation_step = 0
+        texture = self.stock_texture.copy()
+        sub_texture = self.animation[self.animation_step]
+        sub_texture.fill((self.color.r, self.color.g, self.color.b, 0), None, pg.BLEND_RGBA_MAX)
+        texture.blit(sub_texture, (0, 0))
+        self.texture = pg.transform.scale(texture, (80, 80))
+
+
+class Tree(Entity):
+    def __init__(self, position: Pos):
+        super().__init__(position)
+        self.texture = pg.image.load(os.path.join(entities_path, f'tree{random.randint(1, 4)}.png'))

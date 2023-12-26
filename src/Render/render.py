@@ -20,5 +20,9 @@ class Render(SceneObjectInterface):
             x = TEXTURE_SIZE * entity.position.x + WIDTH // 2 - self.position.x * TEXTURE_SIZE
             y = TEXTURE_SIZE * entity.position.y + HEIGHT // 2 - self.position.y * TEXTURE_SIZE
             display.blit(entity.texture, (x, y))
+        for entity in self.save.players:
+            x = TEXTURE_SIZE * entity.position.x + WIDTH // 2 - self.position.x * TEXTURE_SIZE
+            y = TEXTURE_SIZE * entity.position.y + HEIGHT // 2 - self.position.y * TEXTURE_SIZE
+            display.blit(entity.texture, (x, y))
         self.save.update()
-        self.position = self.save.entities[0].position
+        self.position = self.save.players[0].position

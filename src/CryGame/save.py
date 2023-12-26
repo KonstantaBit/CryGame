@@ -12,9 +12,12 @@ class Save:
         self.name = name
         self.seed = None
         self.chunks = dict()
+        self.players: list[Entity] = list()
         self.entities: list[Entity] = list()
 
     def update(self):
+        for el in self.players:
+            el.update()
         for el in self.entities:
             el.update()
 
@@ -28,6 +31,8 @@ class Save:
             temp_chunk = Chunk()
             temp_chunk.generate(x, y, self.seed)
             self.chunks[(x, y)] = temp_chunk
+        finally:
+            self.entities.extend(self.chunks[(x, y)].entities)
 
     def save_chunk(self, x: int, y: int):
         with open(os.path.join(saves_path, self.name, "chunks", f"x{x}y{y}.dat"), "wb") as file:
@@ -41,8 +46,8 @@ class Save:
 
     def manage_chunks(self, load_points: list[[int, int]]):
         for el in load_points:
-            for i in range(- RENDER_DISTANCE, RENDER_DISTANCE + 1):
-                for j in range(- RENDER_DISTANCE, RENDER_DISTANCE + 1):
+            for i in range(-RENDER_DISTANCE, RENDER_DISTANCE + 1):
+                for j in range(-RENDER_DISTANCE, RENDER_DISTANCE + 1):
                     if (el[0] + i, el[1] + j) not in self.chunks.keys():
                         self.load_chunk(el[0] + i, el[1] + j)
 

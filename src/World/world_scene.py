@@ -14,8 +14,8 @@ class WorldScene(SceneInterface):
         self.add_scene_object(render)
         self.sm = SaveManager()
         self.player = Dwarf(Pos(0, 0))
-        self.sm.current.entities.append(self.player)
-        self.sm.current.entities.append(ProbeFlag(Pos(10, 10), pg.Color(255, 0, 0)))
+        self.sm.current.players.append(self.player)
+        self.sm.current.players.append(ProbeFlag(Pos(10, 10), pg.Color(255, 0, 0)))
 
     def handle_events(self):
         for event in pg.event.get():
