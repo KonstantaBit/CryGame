@@ -85,8 +85,8 @@ class MainMenuScene(SceneInterface):
                     pg.quit()
                     sys.exit()
                 elif self.play_button.mouse_over():
-                    self.scene_manager.current_scene = 1
+                    SceneManager(self.screen).current_scene = 1
                 elif self.multiplayer_button.mouse_over():
-                    self.scene_manager.current_scene = 2
+                    SceneManager(self.screen).current_scene = 2
                 elif self.settings_button.mouse_over():
                     pass

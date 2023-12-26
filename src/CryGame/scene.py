@@ -8,26 +8,22 @@ class SceneInterface(ABC):
     @abstractmethod
     def __init__(self):
         self.screen = None
-        self.scene_manager = None
         self.scene_objects = list()
 
-    def set_screen(self, screen: pg.Surface):
+    def set_screen(self, screen: pg.Surface) -> None:
         self.screen = screen
-
-    def set_scene_manager(self, scene_manager):
-        self.scene_manager = scene_manager
 
     def draw(self) -> None:
         for obj in self.scene_objects:
             obj.draw(self.screen)
 
-    def handle_events(self):
+    def handle_events(self) -> None:
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 pg.quit()
                 sys.exit()
 
-    def run(self):
+    def update(self) -> None:
         self.handle_events()
         self.draw()
 

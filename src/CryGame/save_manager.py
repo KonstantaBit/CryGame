@@ -16,7 +16,7 @@ class SaveManager:
     def __init__(self):
         self.current: Save
 
-    def _load(self, name):
+    def load(self, name):
         with open(os.path.join(saves_path, f"{name}_ser"), "rb") as file:
             self.current = pickle.load(file)
 
@@ -28,3 +28,4 @@ class SaveManager:
         self.current = Save(name)
         self.current.generate_seed()
         self.save_current()
+        print(1)

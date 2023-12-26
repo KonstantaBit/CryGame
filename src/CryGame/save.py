@@ -1,9 +1,10 @@
 import os
 import pickle
 import random
-
-from .chunck import Chunk
+from src.Entity import *
+from .chunk import Chunk
 from paths import saves_path
+from constants import CHUNK_SIZE, RENDER_DISTANCE
 
 
 class Save:
@@ -11,6 +12,11 @@ class Save:
         self.name = name
         self.seed = None
         self.chunks = dict()
+        self.entities: list[Entity] = list()
+
+    def update(self):
+        for el in self.entities:
+            el.update()
 
     def load_chunk(self, x: int, y: int):
         try:
@@ -31,18 +37,18 @@ class Save:
     def save_all_chunks(self):
         for el in self.chunks.keys():
             self.save_chunk(*el)
+        self.chunks.clear()
 
     def manage_chunks(self, load_points: list[[int, int]]):
         for el in load_points:
-            for i in range(2):
-                for j in range(2):
-                    if (el[0] - i, el[1] - j) not in self.chunks.keys():
+            for i in range(- RENDER_DISTANCE, RENDER_DISTANCE + 1):
+                for j in range(- RENDER_DISTANCE, RENDER_DISTANCE + 1):
+                    if (el[0] + i, el[1] + j) not in self.chunks.keys():
                         self.load_chunk(el[0] + i, el[1] + j)
 
     @staticmethod
     def get_chunk_number_by_cords(x: float, y: float) -> (int, int):
-        #  Сделать размер чанка костантным (где-то записать, чтобы был глобальный доступ)
-        return x // 64, y // 64
+        return x // CHUNK_SIZE, y // CHUNK_SIZE
 
     def generate_seed(self):
         self.seed = random.randint(1, 1000)
