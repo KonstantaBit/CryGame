@@ -84,8 +84,9 @@ class Dwarf(Entity):
 
 
 class ProbeFlag(Entity):
-    def __init__(self, position: Pos, color: pg.Color):
+    def __init__(self, position: Pos, color: pg.Color, contain: str):
         super().__init__(position)
+        self.contain: str = contain
         self.texture = pg.image.load(os.path.join(entities_path, 'stock.png'))
         self.stock_texture = pg.image.load(os.path.join(entities_path, 'stock.png'))
         self.animation = [pg.image.load(os.path.join(entities_path, f'flag{i}.png')).convert_alpha() for i in range(1, 4)]

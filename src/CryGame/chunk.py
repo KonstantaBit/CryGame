@@ -12,11 +12,13 @@ class Chunk:
 
     def generate(self, x, y, seed):
         perlin_noise_height = PerlinNoise(seed=seed, octaves=2,)
-        perlin_noise_ores = PerlinNoise(seed=seed + 1234567890, octaves=5,)
+        perlin_noise_ores_fe = PerlinNoise(seed=seed + 1234567890, octaves=5,)
+        perlin_noise_ores_cu = PerlinNoise(seed=seed + 1234567, octaves=5, )
+        perlin_noise_ores_ag = PerlinNoise(seed=seed + 12345890, octaves=5, )
+        perlin_noise_ores_pb = PerlinNoise(seed=seed + 1267890, octaves=5, )
         for i in range(CHUNK_SIZE):
             for j in range(CHUNK_SIZE):
                 height = perlin_noise_height([(x * CHUNK_SIZE + i) / 512, (y * CHUNK_SIZE + j) / 512])
-                ore_rating = perlin_noise_ores([(x * CHUNK_SIZE + i) / 256, (y * CHUNK_SIZE + j) / 256])
                 temp = Block()
                 if height < -0.015:
                     temp.set_type(Water())
@@ -27,10 +29,18 @@ class Chunk:
                     temp.block_type.texture.fill((255 - 100, 255 - max(150, 200 * (1 - abs(height) * 2)), 255 - 100) + (0,), None, pg.BLEND_RGBA_SUB)
                     if height > 0.1 and random.randint(1, 3) == 1:
                         self.entities.append(Tree(Pos(x * CHUNK_SIZE + i, y * CHUNK_SIZE + j)))
-                    if ore_rating * 3 > 0.5:
+                    if perlin_noise_ores_fe([(x * CHUNK_SIZE + i) / 256, (y * CHUNK_SIZE + j) / 256]) > 0.3:
                         temp.contain.append("Iron")
                         temp.set_type(Gravel())
-                temp.contain.append(ore_rating * 2)
+                    if perlin_noise_ores_cu([(x * CHUNK_SIZE + i) / 256, (y * CHUNK_SIZE + j) / 256]) > 0.3:
+                        temp.contain.append("Copper")
+                        temp.set_type(Gravel())
+                    if perlin_noise_ores_ag([(x * CHUNK_SIZE + i) / 256, (y * CHUNK_SIZE + j) / 256]) > 0.3:
+                        temp.contain.append("Silver")
+                        temp.set_type(Gravel())
+                    if perlin_noise_ores_pb([(x * CHUNK_SIZE + i) / 256, (y * CHUNK_SIZE + j) / 256]) > 0.3:
+                        temp.contain.append("Lead")
+                        temp.set_type(Gravel())
                 self.blocks[i][j] = temp
 
     @property
