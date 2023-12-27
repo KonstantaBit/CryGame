@@ -1,20 +1,21 @@
 import pygame as pg
 from pygame import Rect
 import sys
-from src.CryGame import SceneInterface, SceneManager
+from src.CryGame import SceneInterface, App
 from src.GUI import Image, TextButton, ContainerRows
 from paths import asset_path
 import os
+from constants import WIDTH, HEIGHT
 
 
 class MainMenuScene(SceneInterface):
     def __init__(self):
         super().__init__()
-        self.background = Image(Rect(0, 0, 1080, 720),
+        self.background = Image(Rect(0, 0, WIDTH, HEIGHT),
                                 os.path.join(asset_path, 'image/menu/background.png'))
 
-        x = (1080 - 500) / 2
-        y = (720 - 400) / 2
+        x = (WIDTH - 500) / 2
+        y = (HEIGHT - 400) / 2
 
         self.menu_container = ContainerRows(Rect(x, y, 500, 400), padding=2)
         self.title = TextButton(
@@ -32,34 +33,34 @@ class MainMenuScene(SceneInterface):
             Rect(0, 0, 10, 10),
             200,
             150,
-            "Одиночная игра",
+            "Играть",
             35,
             pg.Color(255, 255, 255),
             os.path.join(asset_path, 'fonts/SourceSansPro-Light.ttf')
         )
         self.menu_container.add(self.play_button)
 
-        self.multiplayer_button = TextButton(
-            Rect(0, 0, 10, 10),
-            200,
-            150,
-            "Сетевая игра",
-            35,
-            pg.Color(255, 255, 255),
-            os.path.join(asset_path, 'fonts/SourceSansPro-Light.ttf')
-        )
-        self.menu_container.add(self.multiplayer_button)
+        # self.multiplayer_button = TextButton(
+        #     Rect(0, 0, 10, 10),
+        #     200,
+        #     150,
+        #     "Сетевая игра",
+        #     35,
+        #     pg.Color(255, 255, 255),
+        #     os.path.join(asset_path, 'fonts/SourceSansPro-Light.ttf')
+        # )
+        # self.menu_container.add(self.multiplayer_button)
 
-        self.settings_button = TextButton(
-            Rect(0, 0, 10, 10),
-            200,
-            150,
-            "Настройки",
-            35,
-            pg.Color(255, 255, 255),
-            os.path.join(asset_path, 'fonts/SourceSansPro-Light.ttf')
-        )
-        self.menu_container.add(self.settings_button)
+        # self.settings_button = TextButton(
+        #     Rect(0, 0, 10, 10),
+        #     200,
+        #     150,
+        #     "Настройки",
+        #     35,
+        #     pg.Color(255, 255, 255),
+        #     os.path.join(asset_path, 'fonts/SourceSansPro-Light.ttf')
+        # )
+        # self.menu_container.add(self.settings_button)
 
         self.exit_button = TextButton(
             Rect(0, 0, 10, 10),
@@ -85,8 +86,4 @@ class MainMenuScene(SceneInterface):
                     pg.quit()
                     sys.exit()
                 elif self.play_button.mouse_over():
-                    SceneManager(self.screen).current_scene = 1
-                elif self.multiplayer_button.mouse_over():
-                    SceneManager(self.screen).current_scene = 2
-                elif self.settings_button.mouse_over():
-                    pass
+                    App().scene_manager.current_scene += 1
